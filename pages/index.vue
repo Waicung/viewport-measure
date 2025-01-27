@@ -29,6 +29,38 @@ onMounted(() => {
   updateSize();
 
 });
+
+const toggleFullScreen = () => {
+  if (document.fullscreenElement) {
+    backToNormal();
+  } else {
+    goFullscreen();
+  }
+};
+
+const goFullscreen = () => {
+  if (component.value.requestFullscreen) {
+    component.value.requestFullscreen();
+  } else if (component.value.mozRequestFullScreen) { // Firefox
+    component.value.mozRequestFullScreen();
+  } else if (component.value.webkitRequestFullscreen) { // Chrome, Safari and Opera
+    component.value.webkitRequestFullscreen();
+  } else if (component.value.msRequestFullscreen) { // IE/Edge
+    component.value.msRequestFullscreen();
+  }
+};
+
+const backToNormal = () => {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  }
+};
 </script>
 
 <template>
@@ -37,6 +69,7 @@ onMounted(() => {
       <p>ViewPort {{ viewPortSize }}</p>
       <p>100vh Body {{ bodySize }}</p>
       <p>Custom Height Component {{ componentSize }}</p>
+      <button @click="toggleFullScreen" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Go Fullscreen</button>
     </div>
   </div>
 </template>
