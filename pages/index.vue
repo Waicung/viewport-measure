@@ -6,6 +6,9 @@ const component = ref(null);
 
 onMounted(() => {
   const updateSize = () => {
+
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    
     viewPortSize.value = {
       width: window.innerWidth,
       height: window.innerHeight,
@@ -18,18 +21,13 @@ onMounted(() => {
     componentSize.value = {
       width: component.value.clientWidth,
       height: component.value.clientHeight,
-    };    
+    };  
 
   };
 
   window.addEventListener('resize', updateSize);
   updateSize();
 
-  const setVh = () => {
-      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-    };
-  setVh();
-  window.addEventListener('resize', setVh);
 });
 </script>
 
